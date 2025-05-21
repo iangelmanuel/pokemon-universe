@@ -1,0 +1,50 @@
+---
+import type { GetStaticPaths } from "astro"
+import { PokemonTCG } from "pokemon-tcg-sdk-typescript"
+import Layout from "../layouts/Layout.astro"
+import PokemonGrid from "../components/PokemonGrid.astro"
+
+export const getStaticPaths = (async ({ paginate }) => {
+  const pokemonsAllSets = await PokemonTCG.getAllSets()
+
+  return paginate(pokemonsAllSets, {
+    pageSize: 20
+  })
+}) satisfies GetStaticPaths
+
+const { page } = Astro.props
+---
+
+<Layout>
+  <main class="max-w-screen-lg mx-auto p-4 mt-10">
+    <h1 class="font-extrabold text-4xl">Bienvenido a Pokemon TCG</h1>
+    <span>{page.currentPage}</span>
+
+    <div class="grid grid-cols-3 gap-4">
+      {page.data.map((pokemon) => <PokemonGrid pokemon={pokemon} />)}
+    </div>
+
+    <div class="flex justify-between mt-8">
+      {
+        page.url.prev && (
+          <a
+            href={page.url.prev}
+            class="text-blue-500 hover:underline"
+          >
+            Previous
+          </a>
+        )
+      }
+      {
+        page.url.next && (
+          <a
+            href={page.url.next}
+            class="text-blue-500 hover:underline"
+          >
+            Next
+          </a>
+        )
+      }
+    </div>
+  </main></Layout
+>
