@@ -1,5 +1,6 @@
 ---
 import type { GetStaticPaths } from "astro"
+import { Image } from "astro:assets"
 import { PokemonTCG } from "pokemon-tcg-sdk-typescript"
 
 export const getStaticPaths = (async () => {
@@ -16,6 +17,14 @@ const { pokemon } = Astro.props
 
 <section class="mx-auto mt-10 max-w-screen-lg p-5 sm:p-0">
   <div class="p-5">
+    <Image
+      src={pokemon.images.large}
+      alt={`Carta pokemon de ${pokemon.name}`}
+      width={500}
+      height={500}
+      class="mb-5 h-auto w-full rounded-lg shadow-lg"
+    />
+
     <h1 class="text-3xl font-bold">{pokemon.name}</h1>
     <button
       onclick="history.back()"
