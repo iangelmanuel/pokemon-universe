@@ -1,0 +1,16 @@
+---
+type Props = {
+  className?: string
+}
+
+const { className } = Astro.props
+---
+
+<h1
+  class:list={[
+    "bg-gradient-to-r from-blue-500 via-green-500 to-yellow-500 bg-clip-text text-transparent",
+    className
+  ]}
+>
+  <slot />
+</h1>

@@ -1,8 +1,10 @@
 ---
 import type { GetStaticPaths } from "astro"
-import Layout from "../../layouts/Layout.astro"
+import Layout from "@/layouts/Layout.astro"
 import { PokemonTCG } from "pokemon-tcg-sdk-typescript"
 import { Image } from "astro:assets"
+import TitleGradient from "@/components/ui/TitleGradient.astro"
+import PokemonCards from "@/components/pokemon-tcg/PokemonCards.astro"
 
 export const getStaticPaths = (async () => {
   const expansions = await PokemonTCG.getAllSets()
@@ -21,41 +23,33 @@ const expansionCards = await PokemonTCG.findCardsByQueries({
 ---
 
 <Layout>
-  <main class="max-w-screen-lg mx-auto p-4 mt-10">
-    <div class="bg-black rounded-4xl shadow-lg p-4 mb-10">
+  <section class="mx-auto mt-10 max-w-screen-lg p-5 sm:p-0">
+    <div class="p-5">
       <Image
         src={expansion.images.logo}
         alt={expansion.name}
         width={200}
         height={300}
         loading="lazy"
-        class="w-[450px] mx-auto"
+        transition:name={`pokeimage-${expansion.id}`}
+        class="mx-auto h-auto w-[500px]"
       />
+      <button
+        onclick="history.back()"
+        class="mb-5 cursor-pointer text-blue-500 hover:text-blue-600 hover:underline"
+        >Ir atras</button
+      >
+      <TitleGradient className="font-title text-6xl">
+        Expansión {expansion.name}
+      </TitleGradient>
     </div>
+  </section>
 
-    <button onclick="history.back()">Ir atras</button>
-    <h1 class="font-extrabold text-4xl">
-      Bienvenido a la expansión de {expansion.name}
-    </h1>
-
-    <section
-      class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4 mt-10"
+  <section class="mx-auto mt-10 max-w-screen-lg p-5 pb-0 sm:p-0 sm:pb-10">
+    <div
+      class="mt-10 grid grid-cols-1 gap-8 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4"
     >
-      {
-        expansionCards.map((card) => (
-          <div class="mt-4">
-            <Image
-              src={card.images.small}
-              alt={card.name}
-              width={200}
-              height={300}
-              loading="lazy"
-              class="w-full h-auto rounded-lg shadow-lg"
-            />
-            <h2 class="text-2xl font-bold">{card.name}</h2>
-          </div>
-        ))
-      }
-    </section>
-  </main>
+      {expansionCards.map((card) => <PokemonCards card={card} />)}
+    </div>
+  </section>
 </Layout>

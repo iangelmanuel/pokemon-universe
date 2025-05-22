@@ -1,0 +1,16 @@
+---
+type Props = {
+  prev?: string
+  next?: string
+}
+
+const { next = undefined, prev = undefined } = Astro.props
+const isNext = next !== undefined
+---
+
+<a
+  href={isNext ? next : prev}
+  class="rounded-lg bg-black px-2 py-1 text-center font-bold text-white shadow-lg transition-shadow duration-300 ease-in-out"
+>
+  <slot />
+</a>

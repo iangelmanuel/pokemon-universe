@@ -1,6 +1,7 @@
 ---
 import { ClientRouter } from "astro:transitions"
-import "../styles/global.css"
+import "@/styles/global.css"
+import NoiseEffect from "@/components/shared/NoiseEffect.astro"
 ---
 
 <!doctype html>
@@ -19,8 +20,12 @@ import "../styles/global.css"
     <ClientRouter />
     <title>Pokemon TCG</title>
   </head>
-  <body>
-    <slot />
+
+  <body class="font-quicksand text-black-ivory">
+    <NoiseEffect />
+    <main>
+      <slot />
+    </main>
   </body>
 </html>
 

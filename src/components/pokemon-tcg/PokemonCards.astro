@@ -1,0 +1,27 @@
+---
+import { Image } from "astro:assets"
+import type { PokemonTCG } from "pokemon-tcg-sdk-typescript"
+
+type Props = {
+  card: PokemonTCG.Card
+}
+
+const { card } = Astro.props
+---
+
+<a
+  href={`/expansions/pokemon-card/${card.id}`}
+  class="group"
+>
+  <div class="mt-4">
+    <Image
+      src={card.images.small}
+      alt={card.name}
+      width={200}
+      height={300}
+      loading="lazy"
+      class="h-auto w-full rounded-lg shadow-lg transition-transform duration-300 ease-in-out group-hover:scale-105"
+    />
+    <h2 class="text-2xl font-bold">{card.name}</h2>
+  </div>
+</a>

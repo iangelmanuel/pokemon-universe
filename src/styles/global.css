@@ -1,1 +1,27 @@
 @import "tailwindcss";
+
+@theme {
+  --color-primary: #e10000;
+  --color-secondary: #b90000;
+  --color-thirdary: #b90000;
+
+  --color-black-ivory: #161616; /* IVORY BLACK */
+
+  --font-title: "PassionOne", sans-serif;
+  --font-quicksand: "Quicksand", sans-serif;
+}
+
+@font-face {
+  font-family: "Quicksand";
+  src: url("./assets/fonts/Quicksand-VariableFont.otf") format("truetype");
+  font-weight: 400, 500, 600, 700;
+  font-display: swap;
+  font-style: normal;
+}
+
+@font-face {
+  font-family: "PassionOne";
+  src: url("./assets/fonts/PassionOne.otf") format("truetype");
+  font-display: swap;
+  font-style: normal;
+}

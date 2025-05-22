@@ -1,0 +1,36 @@
+---
+import type { Page } from "astro"
+import type { PokemonTCG } from "pokemon-tcg-sdk-typescript"
+import PaginationButtons from "../ui/PaginationButtons.astro"
+
+type Props = {
+  page: Page<PokemonTCG.Set>
+  className?: string
+}
+
+const { page, className } = Astro.props
+---
+
+<div class:list={["p-5", className]}>
+  {
+    page.url.prev && (
+      <PaginationButtons prev={page.url.prev}>Anterior</PaginationButtons>
+    )
+  }
+
+  {
+    page.url.last ? (
+      <p class="font-bold">
+        {page.url.current[1]}
+        {"de "}
+        {page.url.last?.at(1)}
+      </p>
+    ) : null
+  }
+
+  {
+    page.url.next && (
+      <PaginationButtons next={page.url.next}>Siguiente</PaginationButtons>
+    )
+  }
+</div>

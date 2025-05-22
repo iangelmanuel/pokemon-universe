@@ -1,8 +1,10 @@
 ---
 import type { GetStaticPaths } from "astro"
 import { PokemonTCG } from "pokemon-tcg-sdk-typescript"
-import Layout from "../layouts/Layout.astro"
-import PokemonGrid from "../components/PokemonGrid.astro"
+import Layout from "@/layouts/Layout.astro"
+import PokemonGrid from "@/components/pokemon-tcg/PokemonGrid.astro"
+import Pagination from "@/components/shared/Pagination.astro"
+import TitleGradient from "@/components/ui/TitleGradient.astro"
 
 export const getStaticPaths = (async ({ paginate }) => {
   const pokemonsAllSets = await PokemonTCG.getAllSets()
@@ -16,35 +18,60 @@ const { page } = Astro.props
 ---
 
 <Layout>
-  <main class="max-w-screen-lg mx-auto p-4 mt-10">
-    <h1 class="font-extrabold text-4xl">Bienvenido a Pokemon TCG</h1>
-    <span>{page.currentPage}</span>
+  <section class="container mx-auto mt-10 border-b border-gray-300 p-5 sm:p-0">
+    <div class="p-40">
+      <TitleGradient className="font-title mb-5 text-center text-7xl">
+        Colecciones de Cartas Pokémon
+      </TitleGradient>
 
-    <div class="grid grid-cols-3 gap-4">
-      {page.data.map((pokemon) => <PokemonGrid pokemon={pokemon} />)}
+      <p class="mx-auto max-w-2xl text-center text-2xl">
+        Explora nuestra extensa colección de cartas Pokémon TCG de todas las
+        expansiones.
+      </p>
+    </div>
+  </section>
+
+  <section class="container mx-auto mt-10 p-5 sm:p-0">
+    <div class="flex items-center justify-center gap-1">
+      <div class="w-full">
+        <input
+          type="text"
+          placeholder="Buscar expansión"
+          class="focus:border-primary w-full rounded-lg border border-gray-300 bg-white p-2 shadow-lg focus:outline-none"
+        />
+      </div>
+
+      <div>
+        <button
+          class="rounded-lg border border-gray-300 bg-white p-2 shadow-lg focus:outline-none"
+          >Filtros</button
+        >
+      </div>
+
+      <div>
+        <select
+          class="rounded-lg border border-gray-300 bg-white p-2 shadow-lg focus:outline-none"
+        >
+          <option value="0">Ordenar por</option>
+          <option value="1">Nombre A-Z</option>
+          <option value="2">Nombre Z-A</option>
+          <option value="3">Más recientes</option>
+          <option value="4">Más antiguos</option>
+        </select>
+      </div>
+    </div>
+  </section>
+
+  <section class="container mx-auto mt-10 p-5 sm:p-0">
+    <div
+      class="grid grid-cols-1 gap-5 sm:grid-cols-2 md:grid-cols-3 xl:grid-cols-6"
+    >
+      {page.data.map((expansion) => <PokemonGrid expansion={expansion} />)}
     </div>
 
-    <div class="flex justify-between mt-8">
-      {
-        page.url.prev && (
-          <a
-            href={page.url.prev}
-            class="text-blue-500 hover:underline"
-          >
-            Previous
-          </a>
-        )
-      }
-      {
-        page.url.next && (
-          <a
-            href={page.url.next}
-            class="text-blue-500 hover:underline"
-          >
-            Next
-          </a>
-        )
-      }
-    </div>
-  </main></Layout
->
+    <Pagination
+      page={page}
+      className="mt-10 flex items-center justify-center gap-5"
+    />
+  </section>
+</Layout>
