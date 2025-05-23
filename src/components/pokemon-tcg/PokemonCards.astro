@@ -3,11 +3,9 @@ import Layout from "@/layouts/Layout.astro"
 import type { ExpansionCardDatum } from "@/types/expansion-card-response"
 import { Image } from "astro:assets"
 import NotFoundImage from "@/assets/not-found-card.jpg"
-import type { ExpansionsDatum } from "@/types/expansions"
 
 type Props = {
   card: ExpansionCardDatum
-  expansion: ExpansionsDatum
 }
 
 const { card } = Astro.props

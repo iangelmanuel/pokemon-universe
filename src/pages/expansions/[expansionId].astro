@@ -23,7 +23,7 @@ const { expansion } = Astro.props
 const data = await fetch(
   `https://api.pokemontcg.io/v2/cards?q=set.id:${expansion.id}`
 )
-const expansionCards: ExpansionCardResponse = await data.json()
+const expansionCards = (await data.json()) as ExpansionCardResponse
 ---
 
 <Layout>
@@ -54,14 +54,7 @@ const expansionCards: ExpansionCardResponse = await data.json()
     <div
       class="mt-10 grid grid-cols-1 gap-8 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4"
     >
-      {
-        expansionCards.data.map((card) => (
-          <PokemonCards
-            expansion={expansion}
-            card={card}
-          />
-        ))
-      }
+      {expansionCards.data.map((card) => <PokemonCards card={card} />)}
     </div>
   </section>
 </Layout>
