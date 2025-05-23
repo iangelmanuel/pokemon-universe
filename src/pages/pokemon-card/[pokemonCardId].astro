@@ -1,0 +1,101 @@
+---
+import type { PokemonCardResponse } from "@/types/pokemon-card-response"
+import { Image } from "astro:assets"
+import NotFoundImage from "@/assets/not-found-card.jpg"
+import Layout from "@/layouts/Layout.astro"
+import Badge from "@/components/ui/Badge.astro"
+import { PokemonCardDataMain } from "@/components/pokemon-card-data/PokemonCardDataMain"
+import "atropos/css"
+
+export const prerender = false
+
+const { pokemonCardId } = Astro.params
+
+const data = await fetch(`https://api.pokemontcg.io/v2/cards/${pokemonCardId}`)
+const { data: pokemon } = (await data.json()) as PokemonCardResponse
+---
+
+<Layout>
+  <button
+    class="font-blue-400 hover:text-blue-500 hover:underline"
+    onclick="history.back()"
+    >Volver</button
+  >
+
+  <section
+    class="container mx-auto grid min-h-screen grid-cols-1 gap-8 p-5 sm:p-0 lg:grid-cols-2"
+  >
+    <article>
+      <div
+        class="relative w-full rounded-lg bg-white py-20 shadow-lg backdrop:backdrop-blur-2xl"
+      >
+        <section class="absolute top-7 left-7 flex gap-2">
+          <h2 class="font-title text-2xl font-bold">{pokemon.name}</h2>
+          <span class="font-medium">HP {pokemon.hp}</span>
+        </section>
+
+        <!-- Card Image -->
+        <section class="atropos my-atropos mx-auto w-[400px]">
+          <div class="atropos-scale">
+            <div class="atropos-rotate">
+              <div class="atropos-inner">
+                <Image
+                  src={pokemon.images.large ?? NotFoundImage}
+                  alt={pokemon.name}
+                  width={200}
+                  height={300}
+                  loading="lazy"
+                  class="mx-auto h-auto w-[400px] rounded-lg shadow-lg"
+                />
+              </div>
+            </div>
+          </div>
+        </section>
+
+        <section>
+          <div class="absolute bottom-7 left-7 flex gap-2">
+            <Badge className="bg-black-ivory text-white">
+              {pokemon.supertype}
+            </Badge>
+
+            <Badge className="bg-black-ivory text-white">
+              {pokemon.subtypes.join(" - ")}
+            </Badge>
+          </div>
+
+          <div class="absolute right-7 bottom-7 flex gap-2">
+            <span class="text-xs capitalize">{pokemon.set.name}</span>
+            <span class="text-xs capitalize"
+              >{pokemon.number}/{pokemon.set.printedTotal}</span
+            >
+          </div>
+        </section>
+      </div>
+
+      <div class="mt-5 flex items-center justify-center gap-2">
+        <span>Evolución de</span>
+        <Badge className="bg-black-ivory text-white">
+          {pokemon.evolvesFrom}
+        </Badge>
+
+        <span> => </span>
+
+        <Badge className="bg-black-ivory text-white">
+          {pokemon.name}
+        </Badge>
+      </div>
+    </article>
+
+    <PokemonCardDataMain pokemon={pokemon} />
+  </section>
+</Layout>
+
+<script>
+  import Atropos from "atropos"
+
+  document.addEventListener("astro:page-load", () => {
+    const myAtropos = Atropos({
+      el: ".my-atropos"
+    })
+  })
+</script>

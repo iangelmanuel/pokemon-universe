@@ -1,15 +1,18 @@
 ---
 import type { GetStaticPaths } from "astro"
 import Layout from "@/layouts/Layout.astro"
-import { PokemonTCG } from "pokemon-tcg-sdk-typescript"
 import { Image } from "astro:assets"
 import TitleGradient from "@/components/ui/TitleGradient.astro"
 import PokemonCards from "@/components/pokemon-tcg/PokemonCards.astro"
+import type { ExpansionsReponse } from "@/types/expansions"
+import NotFoundImage from "@/assets/not-found-card.jpg"
+import type { ExpansionCardResponse } from "@/types/expansion-card-response"
 
 export const getStaticPaths = (async () => {
-  const expansions = await PokemonTCG.getAllSets()
+  const data = await fetch("https://api.pokemontcg.io/v2/sets")
+  const expansions: ExpansionsReponse = await data.json()
 
-  return expansions.map((expansion) => ({
+  return expansions.data.map((expansion) => ({
     params: { expansionId: expansion.id },
     props: { expansion }
   }))
@@ -17,16 +20,17 @@ export const getStaticPaths = (async () => {
 
 const { expansion } = Astro.props
 
-const expansionCards = await PokemonTCG.findCardsByQueries({
-  q: `set.id:${expansion.id}`
-})
+const data = await fetch(
+  `https://api.pokemontcg.io/v2/cards?q=set.id:${expansion.id}`
+)
+const expansionCards: ExpansionCardResponse = await data.json()
 ---
 
 <Layout>
   <section class="mx-auto mt-10 max-w-screen-lg p-5 sm:p-0">
     <div class="p-5">
       <Image
-        src={expansion.images.logo}
+        src={expansion.images.logo ?? NotFoundImage}
         alt={expansion.name}
         width={200}
         height={300}
@@ -34,6 +38,7 @@ const expansionCards = await PokemonTCG.findCardsByQueries({
         transition:name={`pokeimage-${expansion.id}`}
         class="mx-auto h-auto w-[500px]"
       />
+
       <button
         onclick="history.back()"
         class="mb-5 cursor-pointer text-blue-500 hover:text-blue-600 hover:underline"
@@ -49,7 +54,14 @@ const expansionCards = await PokemonTCG.findCardsByQueries({
     <div
       class="mt-10 grid grid-cols-1 gap-8 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4"
     >
-      {expansionCards.map((card) => <PokemonCards card={card} />)}
+      {
+        expansionCards.data.map((card) => (
+          <PokemonCards
+            expansion={expansion}
+            card={card}
+          />
+        ))
+      }
     </div>
   </section>
 </Layout>
