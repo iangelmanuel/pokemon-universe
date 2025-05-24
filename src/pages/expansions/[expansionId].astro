@@ -20,15 +20,16 @@ export const getStaticPaths = (async () => {
 
 const { expansion } = Astro.props
 
-const data = await fetch(
+const dataExpansionCards = await fetch(
   `https://api.pokemontcg.io/v2/cards?q=set.id:${expansion.id}`
 )
-const expansionCards = (await data.json()) as ExpansionCardResponse
+const expansionCards =
+  (await dataExpansionCards.json()) as ExpansionCardResponse
 ---
 
 <Layout>
   <section class="mx-auto mt-10 max-w-screen-lg p-5 sm:p-0">
-    <div class="p-5">
+    <article>
       <Image
         src={expansion.images.logo ?? NotFoundImage}
         alt={expansion.name}
@@ -44,17 +45,18 @@ const expansionCards = (await data.json()) as ExpansionCardResponse
         class="mb-5 cursor-pointer text-blue-500 hover:text-blue-600 hover:underline"
         >Ir atras</button
       >
+
       <TitleGradient className="font-title text-6xl">
         Expansión {expansion.name}
       </TitleGradient>
-    </div>
+    </article>
   </section>
 
   <section class="mx-auto mt-10 max-w-screen-lg p-5 pb-0 sm:p-0 sm:pb-10">
-    <div
-      class="mt-10 grid grid-cols-1 gap-8 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4"
+    <article
+      class="grid grid-cols-1 gap-8 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4"
     >
       {expansionCards.data.map((card) => <PokemonCards card={card} />)}
-    </div>
+    </article>
   </section>
 </Layout>

@@ -16,14 +16,8 @@ const { data: pokemon } = (await data.json()) as PokemonCardResponse
 ---
 
 <Layout>
-  <button
-    class="font-blue-400 hover:text-blue-500 hover:underline"
-    onclick="history.back()"
-    >Volver</button
-  >
-
   <section
-    class="container mx-auto grid min-h-screen grid-cols-1 gap-8 p-5 sm:p-0 lg:grid-cols-2"
+    class="mx-auto grid max-w-7xl grid-cols-1 justify-center gap-8 p-5 sm:p-0 md:grid-cols-2"
   >
     <article>
       <div
@@ -73,20 +67,46 @@ const { data: pokemon } = (await data.json()) as PokemonCardResponse
       </div>
 
       <div class="mt-5 flex items-center justify-center gap-2">
-        <span>Evolución de</span>
-        <Badge className="bg-black-ivory text-white">
-          {pokemon.evolvesFrom}
-        </Badge>
+        {
+          pokemon.evolvesFrom && (
+            <>
+              <span>Evolución de</span>
 
-        <span> => </span>
+              <Badge className="bg-black-ivory text-white">
+                {pokemon.evolvesFrom}
+              </Badge>
 
-        <Badge className="bg-black-ivory text-white">
-          {pokemon.name}
-        </Badge>
+              <span> => </span>
+            </>
+          )
+        }
+
+        {
+          pokemon.evolvesFrom && pokemon.evolvesTo && (
+            <Badge className="bg-primary text-white">{pokemon.name}</Badge>
+          )
+        }
+
+        {
+          pokemon.evolvesTo && (
+            <>
+              <span> => </span>
+
+              <span>Que evoluciona a</span>
+
+              <Badge className="bg-black-ivory text-white">
+                {pokemon.evolvesTo}
+              </Badge>
+            </>
+          )
+        }
       </div>
     </article>
 
-    <PokemonCardDataMain pokemon={pokemon} />
+    <PokemonCardDataMain
+      pokemon={pokemon}
+      client:load
+    />
   </section>
 </Layout>
 
@@ -94,7 +114,7 @@ const { data: pokemon } = (await data.json()) as PokemonCardResponse
   import Atropos from "atropos"
 
   document.addEventListener("astro:page-load", () => {
-    const myAtropos = Atropos({
+    Atropos({
       el: ".my-atropos"
     })
   })

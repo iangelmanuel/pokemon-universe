@@ -10,6 +10,7 @@ export interface Data {
   hp: string
   types: string[]
   evolvesFrom: string
+  evolvesTo: string
   attacks: Attack[]
   weaknesses: Resistance[]
   resistances: Resistance[]
