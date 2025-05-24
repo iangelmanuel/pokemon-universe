@@ -9,8 +9,6 @@ type Props = {
 }
 
 export const PokemonStatsData = ({ pokemon }: Props) => {
-  console.log(pokemon)
-
   const weaknessesVariant = pokemon.weaknesses
     ?.map((weakness) => weakness.type)
     .join("")

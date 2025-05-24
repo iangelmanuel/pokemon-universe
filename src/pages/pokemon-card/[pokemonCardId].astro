@@ -3,9 +3,9 @@ import type { PokemonCardResponse } from "@/types/pokemon-card-response"
 import { Image } from "astro:assets"
 import NotFoundImage from "@/assets/not-found-card.jpg"
 import Layout from "@/layouts/Layout.astro"
-import Badge from "@/components/ui/Badge.astro"
 import { PokemonCardDataMain } from "@/components/pokemon-card-data/PokemonCardDataMain"
 import "atropos/css"
+import { Badge } from "@/components/ui-shadcn/badge"
 
 export const prerender = false
 
@@ -13,6 +13,8 @@ const { pokemonCardId } = Astro.params
 
 const data = await fetch(`https://api.pokemontcg.io/v2/cards/${pokemonCardId}`)
 const { data: pokemon } = (await data.json()) as PokemonCardResponse
+
+const badgeVariant = pokemon.types.at(0)?.toLocaleLowerCase() ?? "default"
 ---
 
 <Layout>
@@ -25,7 +27,7 @@ const { data: pokemon } = (await data.json()) as PokemonCardResponse
       >
         <section class="absolute top-7 left-7 flex gap-2">
           <h2 class="font-title text-2xl font-bold">{pokemon.name}</h2>
-          <span class="font-medium">HP {pokemon.hp}</span>
+          <span class="font-medium text-green-500">{pokemon.hp} HP</span>
         </section>
 
         <!-- Card Image -->
@@ -71,32 +73,26 @@ const { data: pokemon } = (await data.json()) as PokemonCardResponse
           pokemon.evolvesFrom && (
             <>
               <span>Evolución de</span>
-
-              <Badge className="bg-black-ivory text-white">
-                {pokemon.evolvesFrom}
-              </Badge>
-
-              <span> => </span>
+              <Badge variant="black">{pokemon.evolvesFrom}</Badge>
+              <span>{"=>"}</span>
             </>
           )
         }
 
         {
-          pokemon.evolvesFrom && pokemon.evolvesTo && (
-            <Badge className="bg-primary text-white">{pokemon.name}</Badge>
+          (pokemon.evolvesFrom || pokemon.evolvesTo) && (
+            <>
+              <Badge variant={badgeVariant as any}>{pokemon.name}</Badge>
+            </>
           )
         }
 
         {
           pokemon.evolvesTo && (
             <>
-              <span> => </span>
-
               <span>Que evoluciona a</span>
-
-              <Badge className="bg-black-ivory text-white">
-                {pokemon.evolvesTo}
-              </Badge>
+              <span> => </span>
+              <Badge variant="black">{pokemon.evolvesTo}</Badge>
             </>
           )
         }
