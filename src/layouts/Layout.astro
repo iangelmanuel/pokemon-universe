@@ -2,27 +2,21 @@
 import { ClientRouter } from "astro:transitions"
 import "@/styles/global.css"
 import NoiseEffect from "@/components/shared/NoiseEffect.astro"
+import Seo from "@/components/shared/Seo.astro"
 ---
 
 <!doctype html>
-<html lang="en">
+<html lang="es">
   <head>
-    <meta charset="UTF-8" />
-    <meta
-      name="viewport"
-      content="width=device-width"
-    />
-    <link
-      rel="icon"
-      type="image/svg+xml"
-      href="/favicon.svg"
+    <Seo
+      title="Pokeworld - A Pokémon World"
+      description="Explora el mundo Pokémon con Pokeworld, tu destino definitivo para aventuras, noticias y comunidad Pokémon."
     />
     <ClientRouter />
-    <title>Pokemon TCG</title>
   </head>
 
   <body class="font-quicksand text-black-ivory">
-    <!-- <NoiseEffect /> -->
+    <NoiseEffect />
 
     <main>
       <slot />

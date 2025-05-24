@@ -1,0 +1,112 @@
+---
+import { siteInfo } from "@/constant/site-info"
+
+interface Props {
+  title?: string
+  description?: string
+  image?: string | undefined
+}
+
+const { title: siteTitle, description: siteDesc, image: siteImage } = siteInfo
+
+const {
+  title = siteTitle,
+  description = siteDesc,
+  image = siteImage
+} = Astro.props
+---
+
+<meta charset="UTF-8" />
+<meta
+  name="viewport"
+  content="width=device-width"
+/>
+<title>
+  {title}
+</title>
+
+<link
+  rel="icon"
+  type="image/svg+xml"
+  href="/favicon.svg"
+/>
+
+<link
+  rel="preload"
+  href={image}
+  as="image"
+  type="image/webp"
+  crossorigin="anonymous"
+/>
+
+<!-- TODO: Convert to Woff2 -->
+<link
+  rel="preload"
+  as="font"
+  href="/assets/fonts/PassionOne.otf"
+  type="font/otf"
+  crossorigin
+/>
+<link
+  rel="preload"
+  as="font"
+  href="/assets/fonts/Quicksand-VariableFont.otf"
+  type="font/otf"
+  crossorigin
+/>
+
+<meta
+  name="description"
+  content={description}
+/>
+
+<meta
+  property="og:url"
+  content={siteInfo.url}
+/>
+<meta
+  property="og:type"
+  content="website"
+/>
+<meta
+  property="og:title"
+  content={title}
+/>
+<meta
+  property="og:description"
+  content={description}
+/>
+<meta
+  property="og:image"
+  content={image}
+/>
+<meta
+  property="og:locale"
+  content="es_CO"
+/>
+<meta
+  property="og:site_name"
+  content={siteInfo.title}
+/>
+
+<meta
+  name="twitter:card"
+  content="summary_large_image"
+/>
+
+<meta
+  name="twitter:site"
+  content={siteInfo.twitter}
+/>
+<meta
+  name="twitter:creator"
+  content={siteInfo.twitter}
+/>
+<meta
+  name="twitter:title"
+  content={title}
+/>
+<meta
+  name="twitter:description"
+  content={description}
+/>
