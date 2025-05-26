@@ -3,25 +3,29 @@ import { TabsContent } from "../ui-shadcn/tabs"
 import type { PokemonCardResponse } from "@/types/pokemon-card-response"
 import { energyTypeImage } from "@/constant/energy-types"
 import { Badge } from "../ui-shadcn/badge"
+import clsx from "clsx"
 
 type Props = {
   pokemon: PokemonCardResponse["data"]
+  isTrainerCard: boolean
 }
 
-export const PokemonStatsData = ({ pokemon }: Props) => {
-  const weaknessesVariant = pokemon.weaknesses
-    ?.map((weakness) => weakness.type)
-    .join("")
-    .toLocaleLowerCase() as any
+export const PokemonStatsData = ({ pokemon, isTrainerCard }: Props) => {
+  const weaknessesVariant =
+    (pokemon.weaknesses
+      ?.map((weakness) => weakness.type)
+      .join("")
+      .toLocaleLowerCase() as any) ?? "default"
 
   const weaknessesContent = pokemon.weaknesses
     ?.map(({ type, value }) => `${type} ${value}`)
     .join("")
 
-  const resistancesVariant = pokemon.resistances
-    ?.map((weakness) => weakness.type)
-    .join("")
-    .toLocaleLowerCase() as any
+  const resistancesVariant =
+    (pokemon.resistances
+      ?.map((weakness) => weakness.type)
+      .join("")
+      .toLocaleLowerCase() as any) ?? "default"
 
   const resistancesContent = pokemon.resistances
     ?.map(({ type, value }) => `${type} ${value}`)
@@ -37,17 +41,23 @@ export const PokemonStatsData = ({ pokemon }: Props) => {
         </CardHeader>
 
         <CardContent>
-          <div className="border-muted flex flex-col gap-2 border-b pb-5">
-            <div className="flex items-center justify-between">
-              <span className="font-semibold">Debilidad:</span>
+          <div
+            className={clsx("flex flex-col gap-2", {
+              "border-muted border-b pb-5": !isTrainerCard
+            })}
+          >
+            {pokemon.weaknesses && (
+              <div className="flex items-center justify-between">
+                <span className="font-semibold">Debilidad:</span>
 
-              <Badge
-                className="text-sm font-semibold"
-                variant={weaknessesVariant}
-              >
-                {weaknessesContent}
-              </Badge>
-            </div>
+                <Badge
+                  className="text-sm font-semibold"
+                  variant={weaknessesVariant}
+                >
+                  {weaknessesContent ?? "Ninguna"}
+                </Badge>
+              </div>
+            )}
 
             {pokemon.resistances && (
               <div className="flex items-center justify-between">
@@ -57,16 +67,15 @@ export const PokemonStatsData = ({ pokemon }: Props) => {
                   className="text-sm font-semibold"
                   variant={resistancesVariant}
                 >
-                  {resistancesContent}
+                  {resistancesContent ?? "No tiene"}
                 </Badge>
               </div>
             )}
 
             <div className="flex items-center justify-between">
-              <span className="font-semibold">Costo de retirada</span>
-
-              <div>
-                {pokemon.retreatCost && (
+              {pokemon.retreatCost && (
+                <>
+                  <span className="font-semibold">Costo de retirada</span>
                   <div className="flex items-center">
                     {pokemon.retreatCost.map((energy, index) => (
                       <img
@@ -81,12 +90,16 @@ export const PokemonStatsData = ({ pokemon }: Props) => {
                       />
                     ))}
                   </div>
-                )}
-              </div>
+                </>
+              )}
             </div>
           </div>
 
-          <div className="mt-5 flex flex-col gap-2">
+          <div
+            className={clsx("flex flex-col gap-2", {
+              "mt-5": !isTrainerCard
+            })}
+          >
             <div className="flex items-center justify-between">
               <span className="font-semibold">Rareza:</span>
 

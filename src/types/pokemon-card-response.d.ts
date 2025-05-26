@@ -12,6 +12,7 @@ export interface Data {
   evolvesFrom: string
   evolvesTo: string
   attacks: Attack[]
+  rules: string[]
   weaknesses: Resistance[]
   resistances: Resistance[]
   retreatCost: string[]

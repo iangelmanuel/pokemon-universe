@@ -14,7 +14,10 @@ const { pokemonCardId } = Astro.params
 const data = await fetch(`https://api.pokemontcg.io/v2/cards/${pokemonCardId}`)
 const { data: pokemon } = (await data.json()) as PokemonCardResponse
 
-const badgeVariant = pokemon.types.at(0)?.toLocaleLowerCase() ?? "default"
+console.log(pokemon)
+const isTrainerCard = pokemon.supertype === "Trainer"
+
+const badgeVariant = pokemon.types?.at(0)?.toLocaleLowerCase() ?? "default"
 ---
 
 <Layout>
@@ -27,7 +30,11 @@ const badgeVariant = pokemon.types.at(0)?.toLocaleLowerCase() ?? "default"
       >
         <section class="absolute top-7 left-7 flex gap-2">
           <h2 class="font-title text-2xl font-bold">{pokemon.name}</h2>
-          <span class="font-medium text-green-500">{pokemon.hp} HP</span>
+          {
+            !isTrainerCard && (
+              <span class="font-medium text-green-500">{pokemon.hp} HP</span>
+            )
+          }
         </section>
 
         <!-- Card Image -->
@@ -60,7 +67,8 @@ const badgeVariant = pokemon.types.at(0)?.toLocaleLowerCase() ?? "default"
           </div>
 
           <div class="absolute right-7 bottom-7 flex gap-2">
-            <span class="text-xs capitalize">{pokemon.set.name}</span>
+            <span class="text-xs capitalize">Expansión: {pokemon.set.name}</span
+            >
             <span class="text-xs capitalize"
               >{pokemon.number}/{pokemon.set.printedTotal}</span
             >
@@ -82,7 +90,11 @@ const badgeVariant = pokemon.types.at(0)?.toLocaleLowerCase() ?? "default"
         {
           (pokemon.evolvesFrom || pokemon.evolvesTo) && (
             <>
-              <Badge variant={badgeVariant as any}>{pokemon.name}</Badge>
+              <Badge
+                variant={isTrainerCard ? (badgeVariant as any) : "default"}
+              >
+                {pokemon.name}
+              </Badge>
             </>
           )
         }
@@ -101,6 +113,7 @@ const badgeVariant = pokemon.types.at(0)?.toLocaleLowerCase() ?? "default"
 
     <PokemonCardDataMain
       pokemon={pokemon}
+      isTrainerCard={isTrainerCard}
       client:load
     />
   </section>

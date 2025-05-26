@@ -8,30 +8,37 @@ import { energyTypeImage } from "@/constant/energy-types"
 
 type Props = {
   pokemon: PokemonCardResponse["data"]
+  isTrainerCard: boolean
 }
 
-export const PokemonCardDataMain = ({ pokemon }: Props) => {
+export const PokemonCardDataMain = ({ pokemon, isTrainerCard }: Props) => {
   return (
     <article>
       <section className="py-20">
         <div className="relative w-full">
           <h2 className="font-title text-4xl font-bold">{pokemon.name}</h2>
 
-          <div className="flex items-center">
-            <img
-              src={
-                energyTypeImage[
-                  pokemon.types.join("") as keyof typeof energyTypeImage
-                ]
-              }
-              alt={`${pokemon.types.join("")}`}
-              className="mr-3 size-6"
-            />
+          {!isTrainerCard ? (
+            <div className="flex items-center">
+              <img
+                src={
+                  energyTypeImage[
+                    pokemon.types.join("") as keyof typeof energyTypeImage
+                  ]
+                }
+                alt={`${pokemon.subtypes.join("")}`}
+                className="mr-3 size-6"
+              />
 
+              <p className="border-l-primary border-l-2 pl-4 text-sm">
+                National Pokédex #{pokemon.nationalPokedexNumbers}
+              </p>
+            </div>
+          ) : (
             <p className="border-l-primary border-l-2 pl-4 text-sm">
-              National Pokédex #{pokemon.nationalPokedexNumbers}
+              Tipo de carta: {pokemon.subtypes.join("")}
             </p>
-          </div>
+          )}
         </div>
       </section>
 
@@ -41,7 +48,7 @@ export const PokemonCardDataMain = ({ pokemon }: Props) => {
             value="attacks"
             className="cursor-pointer text-lg"
           >
-            Ataques
+            {isTrainerCard ? "Regla" : "Ataques"}
           </TabsTrigger>
 
           <TabsTrigger
@@ -67,10 +74,16 @@ export const PokemonCardDataMain = ({ pokemon }: Props) => {
         </TabsList>
 
         {/* Pokemon Card Attack Data */}
-        <PokemonAttackData pokemon={pokemon} />
+        <PokemonAttackData
+          pokemon={pokemon}
+          isTrainerCard={isTrainerCard}
+        />
 
         {/* Pokemon Card Stats Data */}
-        <PokemonStatsData pokemon={pokemon} />
+        <PokemonStatsData
+          pokemon={pokemon}
+          isTrainerCard={isTrainerCard}
+        />
 
         {/* Pokemon Card Market Data */}
         <PokemonMarketData pokemon={pokemon} />
