@@ -33,7 +33,7 @@ export const PokemonStatsData = ({ pokemon, isTrainerCard }: Props) => {
 
   return (
     <TabsContent value="stats">
-      <Card className="w-full rounded-lg bg-white p-4 shadow-lg">
+      <Card className="w-full p-4">
         <CardHeader>
           <CardTitle>
             <h3 className="font-title text-lg">Detalles de la carta</h3>
