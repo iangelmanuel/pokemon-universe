@@ -15,10 +15,7 @@ type Props = {
 
 export const TabAnalytics = ({ marketData, pokemon }: Props) => {
   return (
-    <TabsContent
-      value="analytics"
-      className="mt-6"
-    >
+    <TabsContent value="analytics">
       <div className="grid grid-cols-1 gap-6">
         {/* Métricas de mercado */}
         <Card>

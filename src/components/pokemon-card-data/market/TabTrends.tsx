@@ -18,10 +18,7 @@ export const TabTrends = ({ priceHistory, marketData }: Props) => {
   const hasReverseHolo = priceHistory.some((entry) => entry.reverseHolo > 0)
 
   return (
-    <TabsContent
-      value="trends"
-      className="mt-6"
-    >
+    <TabsContent value="trends">
       <div className="grid grid-cols-1 gap-6 lg:grid-cols-2">
         {/* Gráfico de tendencias */}
         <Card>

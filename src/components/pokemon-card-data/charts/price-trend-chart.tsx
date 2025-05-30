@@ -7,7 +7,6 @@ import {
   YAxis,
   Legend
 } from "recharts"
-
 import {
   ChartContainer,
   ChartTooltipContent
@@ -51,7 +50,7 @@ export function PriceTrendChart({ data, hasReverseHolo }: Props) {
             stroke="rgba(255,255,255,0.5)"
             fontSize={12}
             tickLine={false}
-            tickFormatter={(value) => `€${value}`}
+            tickFormatter={(value) => `$${value}`}
           />
           <Tooltip
             content={<ChartTooltipContent />}

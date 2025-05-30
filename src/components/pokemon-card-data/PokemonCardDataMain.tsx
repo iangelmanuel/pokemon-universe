@@ -5,7 +5,7 @@ import { PokemonStatsData } from "./PokemonStatsData"
 import { PokemonMarketData } from "./PokemonMarketData"
 import { PokemonSetData } from "./PokemonSetData"
 import { energyTypeImage } from "@/constant/energy-types"
-import { ChartColumnBig, Images, Store, Swords } from "lucide-react"
+import { ChartColumnBig, Images, Scale, Store, Swords } from "lucide-react"
 
 type Props = {
   pokemon: PokemonCardResponse["data"]
@@ -15,7 +15,7 @@ type Props = {
 export const PokemonCardDataMain = ({ pokemon, isTrainerCard }: Props) => {
   return (
     <article className="py-20">
-      <section className="mb-10 w-full">
+      <div className="mb-6 w-full">
         <h2 className="font-title text-4xl font-bold">{pokemon.name}</h2>
 
         {!isTrainerCard ? (
@@ -40,13 +40,13 @@ export const PokemonCardDataMain = ({ pokemon, isTrainerCard }: Props) => {
             {pokemon.subtypes ? pokemon.subtypes.join(", ") : "N/A"}
           </p>
         )}
-      </section>
+      </div>
 
       <Tabs
         defaultValue="market"
         className="w-full"
       >
-        <TabsList className="mb-4 w-full">
+        <TabsList className="w-full">
           <TabsTrigger
             value="market"
             className="data-[state=active]:bg-black-ivory flex-1 text-lg data-[state=active]:text-white"
@@ -59,7 +59,11 @@ export const PokemonCardDataMain = ({ pokemon, isTrainerCard }: Props) => {
             value="attacks"
             className="data-[state=active]:bg-black-ivory flex-1 text-lg data-[state=active]:text-white"
           >
-            <Swords className="mr-2 h-4 w-4" />
+            {isTrainerCard ? (
+              <Scale className="mr-2 h-4 w-4" />
+            ) : (
+              <Swords className="mr-2 h-4 w-4" />
+            )}
             {isTrainerCard ? "Regla" : "Ataques"}
           </TabsTrigger>
 

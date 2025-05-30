@@ -1,130 +1,25 @@
 ---
 import type { PokemonCardResponse } from "@/types/pokemon-card-response"
-import { Image } from "astro:assets"
-import NotFoundImage from "@/assets/not-found-card.jpg"
+
 import Layout from "@/layouts/Layout.astro"
-import { PokemonCardDataMain } from "@/components/pokemon-card-data/PokemonCardDataMain"
-import "atropos/css"
-import { Badge } from "@/components/ui-shadcn/badge"
-import {
-  Card,
-  CardContent,
-  CardFooter,
-  CardHeader
-} from "@/components/ui-shadcn/card"
+import PokemonInfoCard from "@/sections/pokemon-card/PokemonInfoCard.astro"
 
 export const prerender = false
 
 const { pokemonCardId } = Astro.params
-
 const data = await fetch(`https://api.pokemontcg.io/v2/cards/${pokemonCardId}`)
 const { data: pokemon } = (await data.json()) as PokemonCardResponse
 
 const isTrainerCard = pokemon.supertype === "Trainer"
-
 const badgeVariant = pokemon.types?.at(0)?.toLocaleLowerCase() ?? "default"
 ---
 
 <Layout>
-  <section
-    class="mx-auto grid min-h-screen max-w-7xl grid-cols-1 justify-center gap-10 p-5 sm:p-0 md:grid-cols-2"
-  >
-    <article
-      class="sticky top-10 flex flex-col items-center self-start overflow-y-auto pt-10"
-    >
-      <Card className="w-full">
-        <CardHeader className="flex items-center justify-between gap-2">
-          <h2 class="font-title text-2xl font-bold">{pokemon.name}</h2>
-          {
-            !isTrainerCard && (
-              <span class="font-medium text-green-500">{pokemon.hp} HP</span>
-            )
-          }
-        </CardHeader>
-
-        <!-- Card Image -->
-        <CardContent className="atropos my-atropos mx-auto w-[400px] p-5">
-          <div class="atropos-scale">
-            <div class="atropos-rotate">
-              <div class="atropos-inner">
-                <Image
-                  src={pokemon.images.large ?? NotFoundImage}
-                  alt={pokemon.name}
-                  width={200}
-                  height={300}
-                  loading="lazy"
-                  class="mx-auto h-auto w-[400px] rounded-lg shadow-lg"
-                />
-              </div>
-            </div>
-          </div>
-        </CardContent>
-
-        <CardFooter className="flex items-center justify-between gap-2">
-          <div class="flex gap-2">
-            <Badge className="bg-black-ivory text-white">
-              {pokemon.supertype}
-            </Badge>
-
-            <Badge className="bg-black-ivory text-white">
-              {pokemon.subtypes ? pokemon.subtypes.join(", ") : "N/A"}
-            </Badge>
-          </div>
-
-          <div class="flex gap-2">
-            <p class="text-xs capitalize">
-              <span class="font-semibold">Expansión:</span>
-              {pokemon.set.name}
-            </p>
-
-            <span class="text-xs capitalize"
-              >{pokemon.number}/{pokemon.set.printedTotal}</span
-            >
-          </div>
-        </CardFooter>
-      </Card>
-
-      <div class="mt-5 flex items-center justify-center gap-2">
-        {
-          pokemon.evolvesFrom && (
-            <>
-              <span>Evolución de</span>
-              <Badge variant="black">{pokemon.evolvesFrom}</Badge>
-              <span>{"=>"}</span>
-            </>
-          )
-        }
-
-        {
-          (pokemon.evolvesFrom || pokemon.evolvesTo) && (
-            <>
-              <Badge
-                variant={isTrainerCard ? (badgeVariant as any) : "default"}
-              >
-                {pokemon.name}
-              </Badge>
-            </>
-          )
-        }
-
-        {
-          pokemon.evolvesTo && (
-            <>
-              <span>Que evoluciona a</span>
-              <span> => </span>
-              <Badge variant="black">{pokemon.evolvesTo}</Badge>
-            </>
-          )
-        }
-      </div>
-    </article>
-
-    <PokemonCardDataMain
-      pokemon={pokemon}
-      isTrainerCard={isTrainerCard}
-      client:load
-    />
-  </section>
+  <PokemonInfoCard
+    pokemon={pokemon}
+    isTrainerCard={isTrainerCard}
+    badgeVariant={badgeVariant}
+  />
 </Layout>
 
 <script>

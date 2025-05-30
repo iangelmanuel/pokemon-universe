@@ -6,7 +6,8 @@ import {
 } from "@/components/ui-shadcn/card"
 import { TabsContent } from "@radix-ui/react-tabs"
 import { Badge } from "@/components/ui-shadcn/badge"
-import { TrendingUp, TrendingDown } from "lucide-react"
+import { HoloTrenDirection } from "../shared/HoloTrenDirection"
+import { ReverseHoloDirection } from "../shared/ReverseHoloDirection"
 
 interface MarketData {
   percentage: string
@@ -18,69 +19,74 @@ type Props = {
   marketData: {
     [key: string]: number
   }
+  priceInUSD: (euros: number) => number
   holoTrend: MarketData
   reverseHoloTrend: MarketData
 }
 
 export const TabComparison = ({
   marketData,
+  priceInUSD,
   holoTrend,
   reverseHoloTrend
 }: Props) => {
   return (
-    <TabsContent
-      value="comparison"
-      className="mt-6"
-    >
+    <TabsContent value="comparison">
       <div className="grid grid-cols-1 gap-6 md:grid-cols-2">
         {/* Versión Normal */}
         <Card>
           <CardHeader className="mb-4 flex items-center justify-between">
             <h3 className="text-lg font-medium">Versión Normal</h3>
+
             <Badge className="bg-blue-900/50">Holofoil</Badge>
           </CardHeader>
 
           <CardContent>
             <div className="flex items-center justify-between">
               <span className="font-semibold">Precio Actual</span>
+
               <span className="text-xl font-bold">
-                €{marketData.trendPrice}
+                {priceInUSD(marketData.trendPrice)}
               </span>
             </div>
 
             <div className="space-y-2">
               <div className="flex justify-between">
                 <span className="text-sm">1 día</span>
+
                 <div className="flex items-center gap-2">
-                  <span className="">€{marketData.avg1}</span>
+                  <span className="">{priceInUSD(marketData.avg1)}</span>
+
                   <div className="flex items-center gap-1">
-                    <TrendingUp className="h-3 w-3 text-emerald-500" />
-                    <span className="text-xs text-emerald-500">
-                      {(
+                    <ReverseHoloDirection
+                      data={Number(
                         ((marketData.avg1 - marketData.avg7) /
                           marketData.avg7) *
-                        100
-                      ).toFixed(1)}
-                      %
-                    </span>
+                          100
+                      )}
+                      isSmall
+                    />
                   </div>
                 </div>
               </div>
 
               <div className="flex justify-between">
                 <span className="text-sm">7 días</span>
-                <span className="">€{marketData.avg7}</span>
+
+                <span className="">{priceInUSD(marketData.avg7)}</span>
               </div>
 
               <div className="flex justify-between">
                 <span className="text-sm">30 días</span>
+
                 <div className="flex items-center gap-2">
-                  <span className="">€{marketData.avg30}</span>
+                  <span className="">{priceInUSD(marketData.avg30)}</span>
+
                   <div className="flex items-center gap-1">
-                    <TrendingUp className="h-3 w-3 text-emerald-500" />
-                    <span className="text-xs text-emerald-500">
-                      {holoTrend.percentage}%
-                    </span>
+                    <HoloTrenDirection
+                      data={holoTrend}
+                      isSmall
+                    />
                   </div>
                 </div>
               </div>
@@ -94,7 +100,8 @@ export const TabComparison = ({
               </span>
 
               <span className="text-sm">
-                €{marketData.lowPrice} - €{marketData.avg1}
+                {priceInUSD(marketData.lowPrice)} -{" "}
+                {priceInUSD(marketData.avg1)}
               </span>
             </div>
           </CardFooter>
@@ -112,44 +119,53 @@ export const TabComparison = ({
               <div className="flex items-center justify-between">
                 <span className="font-semibold">Precio Actual</span>
                 <span className="text-xl font-bold">
-                  ${marketData.reverseHoloTrend}
+                  {priceInUSD(marketData.reverseHoloTrend)}
                 </span>
               </div>
 
               <div className="space-y-2">
                 <div className="flex justify-between">
                   <span className="text-sm">1 día</span>
+
                   <div className="flex items-center gap-2">
-                    <span className="">€{marketData.reverseHoloAvg1}</span>
+                    <span className="">
+                      {priceInUSD(marketData.reverseHoloAvg1)}
+                    </span>
+
                     <div className="flex items-center gap-1">
-                      <TrendingUp className="h-3 w-3 text-emerald-500" />
-                      <span className="text-xs text-emerald-500">
-                        {(
+                      <ReverseHoloDirection
+                        data={Number(
                           ((marketData.reverseHoloAvg1 -
                             marketData.reverseHoloAvg7) /
                             marketData.reverseHoloAvg7) *
-                          100
-                        ).toFixed(1)}
-                        %
-                      </span>
+                            100
+                        )}
+                        isSmall
+                      />
                     </div>
                   </div>
                 </div>
 
                 <div className="flex justify-between">
                   <span className="text-sm">7 días</span>
-                  <span className="">€{marketData.reverseHoloAvg7}</span>
+                  <span className="">
+                    {priceInUSD(marketData.reverseHoloAvg7)}
+                  </span>
                 </div>
 
                 <div className="flex justify-between">
                   <span className="text-sm">30 días</span>
+
                   <div className="flex items-center gap-2">
-                    <span className="">€{marketData.reverseHoloAvg30}</span>
+                    <span className="">
+                      {priceInUSD(marketData.reverseHoloAvg30)}
+                    </span>
+
                     <div className="flex items-center gap-1">
-                      <TrendingDown className="h-3 w-3 text-red-500" />
-                      <span className="text-xs text-red-500">
-                        {reverseHoloTrend.percentage}%
-                      </span>
+                      <HoloTrenDirection
+                        data={reverseHoloTrend}
+                        isSmall={true}
+                      />
                     </div>
                   </div>
                 </div>
@@ -163,8 +179,7 @@ export const TabComparison = ({
                 </span>
 
                 <span className="text-sm">
-                  -€
-                  {(
+                  {priceInUSD(
                     marketData.trendPrice - marketData.reverseHoloTrend
                   ).toFixed(2)}
                 </span>

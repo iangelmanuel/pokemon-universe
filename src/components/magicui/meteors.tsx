@@ -1,16 +1,14 @@
-"use client";
-
-import { cn } from "@/lib/utils";
-import React, { useEffect, useState } from "react";
+import { cn } from "@/lib/utils"
+import React, { useEffect, useState } from "react"
 
 interface MeteorsProps {
-  number?: number;
-  minDelay?: number;
-  maxDelay?: number;
-  minDuration?: number;
-  maxDuration?: number;
-  angle?: number;
-  className?: string;
+  number?: number
+  minDelay?: number
+  maxDelay?: number
+  minDuration?: number
+  maxDuration?: number
+  angle?: number
+  className?: string
 }
 
 export const Meteors = ({
@@ -20,11 +18,11 @@ export const Meteors = ({
   minDuration = 2,
   maxDuration = 10,
   angle = 215,
-  className,
+  className
 }: MeteorsProps) => {
   const [meteorStyles, setMeteorStyles] = useState<Array<React.CSSProperties>>(
-    [],
-  );
+    []
+  )
 
   useEffect(() => {
     const styles = [...new Array(number)].map(() => ({
@@ -34,10 +32,10 @@ export const Meteors = ({
       animationDelay: Math.random() * (maxDelay - minDelay) + minDelay + "s",
       animationDuration:
         Math.floor(Math.random() * (maxDuration - minDuration) + minDuration) +
-        "s",
-    }));
-    setMeteorStyles(styles);
-  }, [number, minDelay, maxDelay, minDuration, maxDuration, angle]);
+        "s"
+    }))
+    setMeteorStyles(styles)
+  }, [number, minDelay, maxDelay, minDuration, maxDuration, angle])
 
   return (
     <>
@@ -47,8 +45,8 @@ export const Meteors = ({
           key={idx}
           style={{ ...style }}
           className={cn(
-            "pointer-events-none absolute size-0.5 rotate-[var(--angle)] animate-meteor rounded-full bg-zinc-500 shadow-[0_0_0_1px_#ffffff10]",
-            className,
+            "animate-meteor pointer-events-none absolute size-0.5 rotate-[var(--angle)] rounded-full bg-zinc-500 shadow-[0_0_0_1px_#ffffff10]",
+            className
           )}
         >
           {/* Meteor Tail */}
@@ -56,5 +54,5 @@ export const Meteors = ({
         </span>
       ))}
     </>
-  );
-};
+  )
+}
