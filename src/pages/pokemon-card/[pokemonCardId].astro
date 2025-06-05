@@ -1,6 +1,5 @@
 ---
 import type { PokemonCardResponse } from "@/types/pokemon-card-response"
-
 import Layout from "@/layouts/Layout.astro"
 import PokemonInfoCard from "@/sections/pokemon-card/PokemonInfoCard.astro"
 
@@ -21,13 +20,3 @@ const badgeVariant = pokemon.types?.at(0)?.toLocaleLowerCase() ?? "default"
     badgeVariant={badgeVariant}
   />
 </Layout>
-
-<script>
-  import Atropos from "atropos"
-
-  document.addEventListener("astro:page-load", () => {
-    Atropos({
-      el: ".my-atropos"
-    })
-  })
-</script>

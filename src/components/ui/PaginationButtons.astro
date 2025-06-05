@@ -10,7 +10,7 @@ const isNext = next !== undefined
 
 <a
   href={isNext ? next : prev}
-  class="rounded-lg bg-black px-2 py-1 text-center font-bold text-white shadow-lg transition-shadow duration-300 ease-in-out"
+  class="bg-black-ivory dark:bg-white-cascaron text-white-cascaron dark:text-black-ivory hover:bg-black-ivory/80 dark:hover:bg-white-cascaron/80 rounded-lg px-3 py-1.5 text-center font-bold shadow-lg transition-shadow duration-300 ease-in-out hover:shadow-xl active:scale-95 disabled:pointer-events-none disabled:opacity-50"
 >
   <slot />
 </a>

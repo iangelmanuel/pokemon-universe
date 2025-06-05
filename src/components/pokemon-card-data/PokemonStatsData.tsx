@@ -86,7 +86,7 @@ export const PokemonStatsData = ({ pokemon, isTrainerCard }: Props) => {
                           ] ?? ""
                         }
                         alt={`${energy} energy`}
-                        className="h-6 w-6"
+                        className="size-6"
                       />
                     ))}
                   </div>

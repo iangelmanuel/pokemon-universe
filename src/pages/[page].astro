@@ -5,6 +5,9 @@ import Layout from "@/layouts/Layout.astro"
 import PokemonGrid from "@/components/pokemon-tcg/PokemonGrid.astro"
 import Pagination from "@/components/shared/Pagination.astro"
 import TitleGradient from "@/components/ui/TitleGradient.astro"
+import { Button } from "@/components/ui-shadcn/button"
+import { Input } from "@/components/ui-shadcn/input"
+import { SelectComponent } from "@/components/ui/SelectComponent"
 
 export const getStaticPaths = (async ({ paginate }) => {
   const pokemonsAllSets = await PokemonTCG.getAllSets()
@@ -15,6 +18,14 @@ export const getStaticPaths = (async ({ paginate }) => {
 }) satisfies GetStaticPaths
 
 const { page } = Astro.props
+
+const selectContent = [
+  { value: "0", label: "Ordenar por" },
+  { value: "1", label: "Nombre A-Z" },
+  { value: "2", label: "Nombre Z-A" },
+  { value: "3", label: "Más recientes" },
+  { value: "4", label: "Más antiguos" }
+]
 ---
 
 <Layout>
@@ -34,30 +45,21 @@ const { page } = Astro.props
   <section class="container mx-auto mt-10 p-5 sm:p-0">
     <div class="flex items-center justify-center gap-1">
       <div class="w-full">
-        <input
+        <Input
           type="text"
           placeholder="Buscar expansión"
-          class="focus:border-primary w-full rounded-lg border border-gray-300 bg-white p-2 shadow-lg focus:outline-none"
         />
       </div>
 
       <div>
-        <button
-          class="rounded-lg border border-gray-300 bg-white p-2 shadow-lg focus:outline-none"
-          >Filtros</button
-        >
+        <Button variant="outline">Buscar</Button>
       </div>
 
       <div>
-        <select
-          class="rounded-lg border border-gray-300 bg-white p-2 shadow-lg focus:outline-none"
-        >
-          <option value="0">Ordenar por</option>
-          <option value="1">Nombre A-Z</option>
-          <option value="2">Nombre Z-A</option>
-          <option value="3">Más recientes</option>
-          <option value="4">Más antiguos</option>
-        </select>
+        <SelectComponent
+          data={selectContent}
+          client:load
+        />
       </div>
     </div>
   </section>

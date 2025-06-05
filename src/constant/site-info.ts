@@ -1,5 +1,5 @@
 export const siteInfo = {
-  title: "Pokeworld",
+  title: "Pokemon Universe",
   description:
     "Pokeworld es un sitio web dedicado a los fanáticos de Pokémon, donde puedes explorar información detallada sobre pokemons, cartas, sets y más.",
   image: "assets/images/logo.webp",

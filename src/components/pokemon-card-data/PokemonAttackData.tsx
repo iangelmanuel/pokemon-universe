@@ -60,7 +60,7 @@ const Attack = ({
                     ""
                   }
                   alt={energy}
-                  className="h-6 w-6"
+                  className="size-6"
                 />
               ))}
               <span className="font-title ml-2 text-lg">{atk.name}</span>{" "}

@@ -119,3 +119,13 @@ const { pokemon, isTrainerCard, badgeVariant } = Astro.props
     client:load
   />
 </section>
+
+<script>
+  import Atropos from "atropos"
+
+  document.addEventListener("astro:page-load", () => {
+    Atropos({
+      el: ".my-atropos"
+    })
+  })
+</script>

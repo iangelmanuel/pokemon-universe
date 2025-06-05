@@ -1,42 +1,14 @@
 ---
 import { ClientRouter } from "astro:transitions"
 import "@/styles/global.css"
-import NoiseEffect from "@/components/shared/NoiseEffect.astro"
+// import NoiseEffect from "@/components/shared/NoiseEffect.astro"
 import Seo from "@/components/shared/Seo.astro"
 import { ModeToggle } from "@/components/shared/ModeToggle"
 import { Meteors } from "@/components/magicui/meteors"
 ---
 
-<!doctype html>
-<html lang="es">
-  <div class="fixed top-0 left-0 z-[-1] h-screen w-full overflow-hidden">
-    <Meteors client:idle />
-  </div>
-
-  <head>
-    <Seo
-      title="Pokeworld - A Pokémon World"
-      description="Explora el mundo Pokémon con Pokeworld, tu destino definitivo para aventuras, noticias y comunidad Pokémon."
-    />
-    <ClientRouter />
-  </head>
-
-  <body
-    class="font-quicksand text-black-ivory selection:bg-black-ivory dark:selection:bg-white-cascaron selection:text-white-cascaron dark:selection:text-black-ivory dark:text-white"
-  >
-    <!-- <NoiseEffect /> -->
-    <header
-      class="fixed top-0 left-0 z-50 w-full bg-white p-4 shadow-md dark:bg-gray-950"
-    >
-      <ModeToggle client:load />
-    </header>
-
-    <main>
-      <slot />
-    </main>
-  </body>
-
-  <script is:inline>
+<script is:inline>
+  document.addEventListener("astro:after-swap", () => {
     const getThemePreference = () => {
       if (
         typeof localStorage !== "undefined" &&
@@ -48,6 +20,7 @@ import { Meteors } from "@/components/magicui/meteors"
         ? "dark"
         : "light"
     }
+
     const isDark = getThemePreference() === "dark"
     document.documentElement.classList[isDark ? "add" : "remove"]("dark")
 
@@ -61,7 +34,32 @@ import { Meteors } from "@/components/magicui/meteors"
         attributeFilter: ["class"]
       })
     }
-  </script>
+  })
+</script>
 
+<html lang="es">
+  <head>
+    <Seo />
+    <ClientRouter />
+  </head>
 
+  <body
+    class="font-quicksand text-black-ivory selection:bg-black-ivory dark:selection:bg-white-cascaron selection:text-white-cascaron dark:selection:text-black-ivory dark:text-white"
+  >
+    <div class="fixed top-0 left-0 z-[-1] h-screen w-full overflow-hidden">
+      <Meteors client:idle />
+    </div>
+
+    <!-- <NoiseEffect /> -->
+
+    <header
+      class="fixed top-0 left-0 z-50 w-full bg-white p-4 shadow-md dark:bg-gray-950"
+    >
+      <ModeToggle client:load />
+    </header>
+
+    <main>
+      <slot />
+    </main>
+  </body>
 </html>

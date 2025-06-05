@@ -1,6 +1,7 @@
 ---
 import { Image } from "astro:assets"
 import { PokemonTCG } from "pokemon-tcg-sdk-typescript"
+import { Card, CardContent, CardFooter } from "../ui-shadcn/card"
 
 type Props = {
   expansion: PokemonTCG.Set
@@ -13,21 +14,25 @@ const { expansion } = Astro.props
   href={`/expansions/${expansion.id}`}
   class="group block"
 >
-  <div
-    class="relative flex h-[300px] flex-col items-center justify-center overflow-hidden rounded-lg bg-white/80 p-4 shadow-lg transition-shadow duration-300 ease-in-out hover:shadow-lg"
+  <Card
+    className="relative flex h-[300px] flex-col items-center justify-center overflow-hidden transition-shadow duration-300 ease-in-out"
   >
-    <Image
-      src={expansion.images.logo}
-      alt={expansion.name}
-      width={128}
-      height={128}
-      loading="lazy"
-      transition:name={`pokeimage-${expansion.id}`}
-      class="mx-auto mb-4 w-40 rounded-lg object-cover transition-transform duration-300 ease-in-out group-hover:scale-110"
-    />
+    <CardContent>
+      <Image
+        src={expansion.images.logo}
+        alt={`Set ${expansion.name} logo`}
+        width={128}
+        height={128}
+        loading="lazy"
+        transition:name={`pokeimage-${expansion.id}`}
+        class="mx-auto mb-4 w-40 rounded-lg object-cover transition-transform duration-300 ease-in-out group-hover:scale-110"
+      />
+    </CardContent>
 
-    <h2 class="absolute bottom-5 left-3 text-2xl font-bold capitalize">
-      {expansion.name}
-    </h2>
-  </div>
+    <CardFooter>
+      <h2 class="font-title absolute bottom-5 left-3 text-2xl capitalize">
+        {expansion.name}
+      </h2>
+    </CardFooter>
+  </Card>
 </a>
