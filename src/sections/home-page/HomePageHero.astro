@@ -3,60 +3,58 @@ import { Meteors } from "@/components/magicui/meteors"
 import { Button, buttonVariants } from "@/components/ui-shadcn/button"
 ---
 
-<section class="fixed top-0 left-0 z-[-1] h-screen w-full overflow-hidden">
-  <Meteors client:load />
-</section>
+<section
+  class="relative mx-auto mt-20 flex min-h-screen max-w-screen-xl flex-col items-center justify-between border-b p-5 md:mt-0 md:flex-row md:p-0"
+>
+  <div class="absolute top-0 left-0 z-[-1] h-screen w-full overflow-hidden">
+    <Meteors client:load />
+  </div>
 
-<section>
-  <article
-    class="relative mx-auto flex min-h-screen max-w-screen-xl items-center justify-between border-b"
-  >
-    <div class="flex flex-col justify-center">
-      <div class="max-w-2xl">
-        <h1
-          class="title-animation font-title text-primary text-8xl text-amber-500"
-        >
-          Explora. Aprende. Colecciona.
-        </h1>
-
-        <span class="subtitle-animation mt-2 block text-xl">
-          Una experiencia dinámica para fans que quieren ir más allá de la
-          batalla y descubrir todo el universo detrás de cada Pokémon y carta.
-        </span>
-      </div>
-
-      <div class="btn-animation">
-        <a
-          href="/1"
-          class:list={[
-            buttonVariants({ variant: "secondary" }),
-            "mt-8 bg-blue-700 text-lg"
-          ]}
-          >Explora la collección TCG</a
-        >
-
-        <a
-          href="/cards"
-          class:list={[
-            buttonVariants({ variant: "secondary" }),
-            "mt-8 bg-green-600 text-lg"
-          ]}
-          >Explora la Pokédex</a
-        >
-      </div>
-    </div>
-
-    <div class="relative">
-      <div
-        class="absolute top-1/2 left-1/2 size-60 -translate-x-1/2 -translate-y-1/2 rounded-[60px] bg-amber-500/60 blur-3xl"
+  <div class="flex flex-col justify-center">
+    <div class="max-w-2xl">
+      <h1
+        class="title-animation font-title text-primary text-7xl text-amber-500 sm:text-8xl"
       >
-      </div>
-      <canvas
-        id="charmander-canvas"
-        class="sticky top-50 w-full"
-      ></canvas>
+        Explora. Aprende. Colecciona.
+      </h1>
+
+      <span class="subtitle-animation mt-2 block text-xl">
+        Una experiencia dinámica para fans que quieren ir más allá de la batalla
+        y descubrir todo el universo detrás de cada Pokémon y carta.
+      </span>
     </div>
-  </article>
+
+    <div class="btn-animation mt-8 flex flex-col gap-4 sm:flex-row">
+      <a
+        href="/1"
+        class:list={[
+          buttonVariants({ variant: "secondary" }),
+          "bg-blue-700 text-lg"
+        ]}
+        >Explora la collección TCG</a
+      >
+
+      <a
+        href="/pokedex"
+        class:list={[
+          buttonVariants({ variant: "secondary" }),
+          "bg-green-600 text-lg"
+        ]}
+        >Explora la Pokédex</a
+      >
+    </div>
+  </div>
+
+  <div class="relative">
+    <div
+      class="absolute top-1/2 left-1/2 size-40 -translate-x-1/2 -translate-y-1/2 rounded-[60px] bg-amber-500/80 blur-3xl"
+    >
+    </div>
+    <canvas
+      id="charmander-canvas"
+      class="w-full"
+    ></canvas>
+  </div>
 </section>
 
 <script>
