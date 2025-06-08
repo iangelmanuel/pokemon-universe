@@ -1,0 +1,29 @@
+---
+import { ModeToggle } from "./ModeToggle"
+---
+
+<header
+  class="bg-background fixed top-0 left-0 z-50 w-full p-5 shadow-lg dark:shadow-none"
+>
+  <section class="container mx-auto flex items-center justify-between">
+    <article class="group">
+      <a
+        href="/"
+        class="flex items-center justify-center gap-3 text-lg font-bold text-gray-900 transition-transform duration-200 group-hover:scale-105 dark:text-white"
+        title="Pokemon Universe"
+      >
+        <img
+          src="./assets/img/logo.webp"
+          alt="Logo de Pokemon Universe"
+          class="h-16 w-auto"
+        />
+
+        <span>Pokemon Universe</span>
+      </a>
+    </article>
+
+    <article>
+      <ModeToggle client:load />
+    </article>
+  </section>
+</header>
