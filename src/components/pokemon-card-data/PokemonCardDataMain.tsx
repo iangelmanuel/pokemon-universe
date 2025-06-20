@@ -84,7 +84,6 @@ export const PokemonCardDataMain = ({ pokemon, isTrainerCard }: Props) => {
           </TabsTrigger>
         </TabsList>
 
-        {/* TODO: Fix prices and trendlines */}
         {/* Pokemon Card Market Data */}
         <PokemonMarketData pokemon={pokemon} />
 

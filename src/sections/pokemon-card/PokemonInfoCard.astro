@@ -86,7 +86,7 @@ const { pokemon, isTrainerCard, badgeVariant } = Astro.props
           <>
             <span>Evolución de</span>
             <Badge variant="black">{pokemon.evolvesFrom}</Badge>
-            <ArrowBigRight className="h-4 w-4 text-gray-500" />
+            <ArrowBigRight className="h-4 w-4" />
           </>
         )
       }
@@ -105,7 +105,7 @@ const { pokemon, isTrainerCard, badgeVariant } = Astro.props
         pokemon.evolvesTo && (
           <>
             <span>Que evoluciona a</span>
-            <ArrowBigRight className="h-4 w-4 text-gray-500" />
+            <ArrowBigRight className="h-4 w-4" />
             <Badge variant="black">{pokemon.evolvesTo}</Badge>
           </>
         )

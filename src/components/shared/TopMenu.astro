@@ -1,9 +1,10 @@
 ---
 import { ModeToggle } from "./ModeToggle"
+import LogoImage from "@/assets/logo.webp"
 ---
 
 <header
-  class="bg-background fixed top-0 left-0 z-50 w-full p-5 shadow-lg dark:shadow-none"
+  class="bg-background sticky top-0 left-0 z-50 w-full shadow-lg dark:shadow-none"
 >
   <section class="container mx-auto flex items-center justify-between">
     <article class="group">
@@ -13,7 +14,7 @@ import { ModeToggle } from "./ModeToggle"
         title="Pokemon Universe"
       >
         <img
-          src="./assets/img/logo.webp"
+          src={LogoImage.src}
           alt="Logo de Pokemon Universe"
           class="h-16 w-auto"
         />

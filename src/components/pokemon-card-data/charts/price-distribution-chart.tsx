@@ -45,7 +45,7 @@ export function PriceDistributionChart({ data }: PriceDistributionChartProps) {
             stroke="rgba(255,255,255,0.5)"
             fontSize={12}
             tickLine={false}
-            tickFormatter={(value) => `$${value}`}
+            tickFormatter={(value) => `€${value}`}
           />
           <Tooltip
             content={<ChartTooltipContent />}

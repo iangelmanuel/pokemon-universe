@@ -1,24 +1,17 @@
-import {
-  BarChart3,
-  Calendar,
-  DollarSign,
-  Eye,
-  TrendingDown,
-  TrendingUp
-} from "lucide-react"
+import { BarChart3, Calendar, DollarSign, Eye, TrendingUp } from "lucide-react"
 import { Badge } from "../ui-shadcn/badge"
 import { Card, CardContent } from "../ui-shadcn/card"
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "../ui-shadcn/tabs"
 import type { PokemonCardResponse } from "@/types/pokemon-card-response"
-import { cn } from "@/lib/utils"
 import { Progress } from "../ui-shadcn/progress"
 import { TabTrends } from "./market/TabTrends"
 import { TabComparison } from "./market/TabComparison"
 import { TabAnalytics } from "./market/TabAnalytics"
 import { priceEmpty } from "@/constant/price-empty"
 import { calculateTrend } from "@/utils/calculate-trend"
-import { useCurrencyConverter } from "@/hooks/useCurrencyConverter"
+import { currencyFormatter } from "@/utils/currency-formatter"
 import { HoloTrenDirection } from "./shared/HoloTrenDirection"
+import { dateFormatter } from "@/utils/date-formatter"
 
 type Props = {
   pokemon: PokemonCardResponse["data"]
@@ -27,18 +20,6 @@ type Props = {
 export const PokemonMarketData = ({ pokemon }: Props) => {
   const { cardmarket } = pokemon
   const marketData = cardmarket?.prices || priceEmpty
-
-  const priceInUSD = (euros: number) => {
-    if (euros === undefined || euros === null || euros === 0) return euros
-
-    if (euros < 0) {
-      const usdNegative = useCurrencyConverter(Math.abs(euros))
-      return usdNegative * -1
-    }
-
-    const usdFormatted = useCurrencyConverter(euros)
-    return usdFormatted
-  }
 
   const holoTrend = calculateTrend(marketData.avg7, marketData.avg30)
 
@@ -79,7 +60,7 @@ export const PokemonMarketData = ({ pokemon }: Props) => {
 
               <div className="flex items-baseline gap-3">
                 <span className="text-4xl font-bold text-emerald-500 md:text-5xl">
-                  {priceInUSD(marketData.trendPrice)}
+                  {currencyFormatter(marketData.trendPrice, {})}
                 </span>
 
                 <div className="flex items-center gap-1">
@@ -95,18 +76,19 @@ export const PokemonMarketData = ({ pokemon }: Props) => {
               >
                 <span className="font-semibold">Fecha de actualización:</span>{" "}
                 {cardmarket.updatedAt
-                  ? new Date(cardmarket.updatedAt).toLocaleDateString("es-ES")
+                  ? dateFormatter(cardmarket.updatedAt, {})
                   : "N/A"}
               </Badge>
 
               <Badge className="border-emerald-700 bg-transparent text-emerald-700 dark:border-emerald-600 dark:bg-emerald-800/50 dark:text-emerald-300">
                 <Eye className="mr-1 h-3 w-3" />
-                Precio Promedio: {priceInUSD(marketData.averageSellPrice)}
+                Precio Promedio:{" "}
+                {currencyFormatter(marketData.averageSellPrice, {})}
               </Badge>
 
               <Badge className="dark:text-gray-200">
-                Rango: {priceInUSD(marketData.lowPrice)} -{" "}
-                {priceInUSD(marketData.avg1)}
+                Rango: {currencyFormatter(marketData.lowPrice, {})} -{" "}
+                {currencyFormatter(marketData.avg1, {})}
               </Badge>
             </div>
           </div>
@@ -128,9 +110,9 @@ export const PokemonMarketData = ({ pokemon }: Props) => {
             />
 
             <div className="mt-1 flex justify-between text-xs">
-              <span>{priceInUSD(marketData.lowPrice)}</span>
-              <span>{priceInUSD(marketData.trendPrice)}</span>
-              <span>{priceInUSD(marketData.avg1)}</span>
+              <span>{currencyFormatter(marketData.lowPrice, {})}</span>
+              <span>{currencyFormatter(marketData.trendPrice, {})}</span>
+              <span>{currencyFormatter(marketData.avg1, {})}</span>
             </div>
           </div>
         </CardContent>
@@ -174,7 +156,6 @@ export const PokemonMarketData = ({ pokemon }: Props) => {
 
         <TabComparison
           marketData={marketData}
-          priceInUSD={priceInUSD}
           holoTrend={holoTrend}
           reverseHoloTrend={reverseHoloTrend}
         />

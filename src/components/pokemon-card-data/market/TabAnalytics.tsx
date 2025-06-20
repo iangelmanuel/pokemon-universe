@@ -128,7 +128,7 @@ export const TabAnalytics = ({ marketData, pokemon }: Props) => {
 
             <div className="flex justify-between">
               <span className="">Moneda</span>
-              <span className="">USD ($)</span>
+              <span className="">EUR (€)</span>
             </div>
 
             <div className="flex justify-between">

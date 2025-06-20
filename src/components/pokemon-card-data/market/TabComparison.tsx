@@ -8,6 +8,7 @@ import { TabsContent } from "@radix-ui/react-tabs"
 import { Badge } from "@/components/ui-shadcn/badge"
 import { HoloTrenDirection } from "../shared/HoloTrenDirection"
 import { ReverseHoloDirection } from "../shared/ReverseHoloDirection"
+import { currencyFormatter } from "@/utils/currency-formatter"
 
 interface MarketData {
   percentage: string
@@ -19,14 +20,12 @@ type Props = {
   marketData: {
     [key: string]: number
   }
-  priceInUSD: (euros: number) => number
   holoTrend: MarketData
   reverseHoloTrend: MarketData
 }
 
 export const TabComparison = ({
   marketData,
-  priceInUSD,
   holoTrend,
   reverseHoloTrend
 }: Props) => {
@@ -46,7 +45,7 @@ export const TabComparison = ({
               <span className="font-semibold">Precio Actual</span>
 
               <span className="text-xl font-bold">
-                {priceInUSD(marketData.trendPrice)}
+                {currencyFormatter(marketData.trendPrice, {})}
               </span>
             </div>
 
@@ -55,7 +54,9 @@ export const TabComparison = ({
                 <span className="text-sm">1 día</span>
 
                 <div className="flex items-center gap-2">
-                  <span className="">{priceInUSD(marketData.avg1)}</span>
+                  <span className="">
+                    {currencyFormatter(marketData.avg1, {})}
+                  </span>
 
                   <div className="flex items-center gap-1">
                     <ReverseHoloDirection
@@ -73,14 +74,18 @@ export const TabComparison = ({
               <div className="flex justify-between">
                 <span className="text-sm">7 días</span>
 
-                <span className="">{priceInUSD(marketData.avg7)}</span>
+                <span className="">
+                  {currencyFormatter(marketData.avg7, {})}
+                </span>
               </div>
 
               <div className="flex justify-between">
                 <span className="text-sm">30 días</span>
 
                 <div className="flex items-center gap-2">
-                  <span className="">{priceInUSD(marketData.avg30)}</span>
+                  <span className="">
+                    {currencyFormatter(marketData.avg30, {})}
+                  </span>
 
                   <div className="flex items-center gap-1">
                     <HoloTrenDirection
@@ -100,8 +105,8 @@ export const TabComparison = ({
               </span>
 
               <span className="text-sm">
-                {priceInUSD(marketData.lowPrice)} -{" "}
-                {priceInUSD(marketData.avg1)}
+                {currencyFormatter(marketData.lowPrice, {})} -{" "}
+                {currencyFormatter(marketData.avg1, {})}
               </span>
             </div>
           </CardFooter>
@@ -119,7 +124,7 @@ export const TabComparison = ({
               <div className="flex items-center justify-between">
                 <span className="font-semibold">Precio Actual</span>
                 <span className="text-xl font-bold">
-                  {priceInUSD(marketData.reverseHoloTrend)}
+                  {currencyFormatter(marketData.reverseHoloTrend, {})}
                 </span>
               </div>
 
@@ -129,7 +134,7 @@ export const TabComparison = ({
 
                   <div className="flex items-center gap-2">
                     <span className="">
-                      {priceInUSD(marketData.reverseHoloAvg1)}
+                      {currencyFormatter(marketData.reverseHoloAvg1, {})}
                     </span>
 
                     <div className="flex items-center gap-1">
@@ -149,7 +154,7 @@ export const TabComparison = ({
                 <div className="flex justify-between">
                   <span className="text-sm">7 días</span>
                   <span className="">
-                    {priceInUSD(marketData.reverseHoloAvg7)}
+                    {currencyFormatter(marketData.reverseHoloAvg7, {})}
                   </span>
                 </div>
 
@@ -158,7 +163,7 @@ export const TabComparison = ({
 
                   <div className="flex items-center gap-2">
                     <span className="">
-                      {priceInUSD(marketData.reverseHoloAvg30)}
+                      {currencyFormatter(marketData.reverseHoloAvg30, {})}
                     </span>
 
                     <div className="flex items-center gap-1">
@@ -179,9 +184,10 @@ export const TabComparison = ({
                 </span>
 
                 <span className="text-sm">
-                  {priceInUSD(
-                    marketData.trendPrice - marketData.reverseHoloTrend
-                  ).toFixed(2)}
+                  {currencyFormatter(
+                    marketData.trendPrice - marketData.reverseHoloTrend,
+                    {}
+                  )}
                 </span>
               </div>
             </CardFooter>

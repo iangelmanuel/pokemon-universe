@@ -18,7 +18,7 @@ const badgeVariants = cva(
         outline:
           "text-foreground [a&]:hover:bg-accent [a&]:hover:text-accent-foreground",
         black:
-          "border-transparent bg-black-ivory text-primary-foreground [a&]:hover:bg-black-ivory/90",
+          "border-transparent bg-black-ivory text-white-cascaron [a&]:hover:bg-black-ivory/90",
         colorless:
           "border-transparent bg-colorless text-primary-foreground [a&]:hover:bg-colorless/90",
         darkness:
