@@ -3,18 +3,14 @@ import { Meteors } from "@/components/magicui/meteors"
 import { buttonVariants } from "@/components/ui-shadcn/button"
 ---
 
-<section
-  class="relative mx-auto mt-20 flex min-h-screen max-w-screen-xl flex-col items-center justify-between border-b p-5 md:mt-0 md:flex-row md:p-0"
->
+<section class="relative mx-auto mt-20 flex min-h-screen max-w-screen-xl flex-col items-center justify-between border-b p-5 md:mt-0 md:flex-row md:p-0">
   <div class="absolute top-0 left-0 z-[-1] h-screen w-full overflow-hidden">
     <Meteors client:load />
   </div>
 
   <div class="flex flex-col justify-center">
     <div class="max-w-2xl">
-      <h1
-        class="title-animation font-title text-primary text-7xl text-amber-500 sm:text-8xl"
-      >
+      <h1 class="title-animation font-title text-primary text-7xl text-amber-500 sm:text-8xl">
         Explora. Aprende. Colecciona.
       </h1>
 
@@ -31,8 +27,9 @@ import { buttonVariants } from "@/components/ui-shadcn/button"
           buttonVariants({ variant: "secondary" }),
           "bg-blue-700 text-lg"
         ]}
-        >Explora la collección TCG</a
       >
+        Explora la collección TCG
+      </a>
 
       <a
         href="/pokedex"
@@ -40,16 +37,14 @@ import { buttonVariants } from "@/components/ui-shadcn/button"
           buttonVariants({ variant: "secondary" }),
           "bg-green-600 text-lg"
         ]}
-        >Explora la Pokédex</a
       >
+        Explora la Pokédex
+      </a>
     </div>
   </div>
 
   <div class="relative">
-    <div
-      class="absolute top-1/2 left-1/2 size-40 -translate-x-1/2 -translate-y-1/2 rounded-[60px] bg-amber-500/80 blur-3xl"
-    >
-    </div>
+    <div class="absolute top-1/2 left-1/2 size-40 -translate-x-1/2 -translate-y-1/2 rounded-[60px] bg-amber-500/80 blur-3xl"></div>
     <canvas
       id="charmander-canvas"
       class="w-full"

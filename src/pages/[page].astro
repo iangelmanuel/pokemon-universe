@@ -65,10 +65,10 @@ const selectContent = [
   </section>
 
   <section class="container mx-auto mt-10 p-5 sm:p-0">
-    <div
-      class="grid grid-cols-1 gap-5 sm:grid-cols-2 md:grid-cols-3 xl:grid-cols-6"
-    >
-      {page.data.map((expansion) => <PokemonGrid expansion={expansion} />)}
+    <div class="grid grid-cols-1 gap-5 sm:grid-cols-2 md:grid-cols-3 xl:grid-cols-6">
+      {page.data.map((expansion) => (
+        <PokemonGrid expansion={expansion} />
+      ))}
     </div>
 
     <Pagination

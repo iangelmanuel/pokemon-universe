@@ -3,7 +3,10 @@ import { TabsContent } from "../ui-shadcn/tabs"
 import type { PokemonCardResponse } from "@/types/pokemon-card-response"
 import { energyTypeImage } from "@/constant/energy-types"
 import { Badge } from "../ui-shadcn/badge"
+
+type BadgeVariant = NonNullable<ComponentProps<typeof Badge>["variant"]>
 import clsx from "clsx"
+import type { ComponentProps } from "react"
 
 type Props = {
   pokemon: PokemonCardResponse["data"]
@@ -15,7 +18,7 @@ export const PokemonStatsData = ({ pokemon, isTrainerCard }: Props) => {
     (pokemon.weaknesses
       ?.map((weakness) => weakness.type)
       .join("")
-      .toLocaleLowerCase() as any) ?? "default"
+      .toLocaleLowerCase() as BadgeVariant) ?? "default"
 
   const weaknessesContent = pokemon.weaknesses
     ?.map(({ type, value }) => `${type} ${value}`)
@@ -25,7 +28,7 @@ export const PokemonStatsData = ({ pokemon, isTrainerCard }: Props) => {
     (pokemon.resistances
       ?.map((weakness) => weakness.type)
       .join("")
-      .toLocaleLowerCase() as any) ?? "default"
+      .toLocaleLowerCase() as BadgeVariant) ?? "default"
 
   const resistancesContent = pokemon.resistances
     ?.map(({ type, value }) => `${type} ${value}`)
